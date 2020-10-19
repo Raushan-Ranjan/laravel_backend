@@ -29,7 +29,7 @@ class ApiController extends Controller
     //     $user->save();
     //     }
 
-    $post = DB::select('select * from post_table ORDER by id DESC');
+    $post = DB::select('select * from csvupload ORDER by id DESC');
     return response()->json($post);
 
     }
@@ -48,11 +48,10 @@ class ApiController extends Controller
                 
                 $validator = Validator::make($item,[
                     
-                    'name' => 'bail|required|string',
-                    'username' => 'bail|required|string',
-                    'email' => 'bail|required|email',
-                    'title' => 'bail|required|string',
-                    'body' => 'bail|required|string',
+                    'motor_controller_type_id' => 'bail|required|string',
+                    'controller_id' => 'bail|required|string',
+                    'lot_no' => 'bail|required|string',
+                    'has_uart' => 'bail|string',
                     
                  ]);
 
@@ -64,17 +63,14 @@ class ApiController extends Controller
                     continue;
                 }
            
-              $user = new Post();
+              $user = new Csvreader();
               
-              $user->name = $item['name'];
-              $user->username = $item['username'];
-              $user->email = $item['email'];
-              $user->title = $item['title'];
-              $user->body = $item['body'];
+              $user->motor_controller_type_id = $item['motor_controller_type_id'];
+              $user->controller_id = $item['controller_id'];
+              $user->lot_no = $item['lot_no'];
+              $user->has_uart = $item['has_uart'];
               $user->save();
 
-
-        $detail = new Detail();
            
                 print_r("hello ");
 
@@ -100,20 +96,7 @@ class ApiController extends Controller
     }
 
     function getComment(){
-        // $data = Http::get('https://jsonplaceholder.typicode.com/comments')->json();
-        // foreach($data as $comment){
-
-        //     $user = new Comment();
-           
-            
-        //    $user->id = $comment['id'];
-        //    $user->postId = $comment['postId'];
-        //     $user->name = $comment['name'];
-        //     $user->email = $comment['email'];
-        //     $user->body = $comment['body'];
-        //     $user->save();
-        //     }
-
+     
         $post = DB::select('select * from comments');
          return response()->json($post);
        
@@ -140,19 +123,6 @@ class ApiController extends Controller
 
     function getDetail(){
 
-        // $data = Http::get('https://jsonplaceholder.typicode.com/users')->json();
-        // foreach($data as $comment){
-
-        //     $user = new Detail();
-           
-            
-        //    $user->id = $comment['id'];
-        //     $user->name = $comment['name'];
-        //     $user->username = $comment['username'];
-        //     $user->email = $comment['email'];
-           
-        //     $user->save();
-        //     }
 
         $post = DB::select('select * from post_table');
         return response()->json($post);
